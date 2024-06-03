@@ -36,5 +36,17 @@ public class Principal {
             seasons.add(seasonData);
         }
         seasons.forEach(System.out::println);
+
+        /*
+        for (int i = 0; i < data.totalSeasons(); i++) {
+            List<EpisodeData> seasonEpisodes = seasons.get(i).episodes();
+            for (int j = 0; j < seasonEpisodes.size(); j++) {
+                System.out.println(seasonEpisodes.get(j).title());
+            }
+        }
+        */
+
+        //Iterating through a list within another list using lambda
+        seasons.forEach(seasonData -> seasonData.episodes().forEach(episodeData -> System.out.println(episodeData.title())));
     }
 }
