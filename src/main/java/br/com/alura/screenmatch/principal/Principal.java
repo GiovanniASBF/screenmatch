@@ -7,8 +7,10 @@ import br.com.alura.screenmatch.service.ApiConsumption;
 import br.com.alura.screenmatch.service.DataConvert;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Principal {
 
@@ -48,5 +50,16 @@ public class Principal {
 
         //Iterating through a list within another list using lambda
         seasons.forEach(seasonData -> seasonData.episodes().forEach(episodeData -> System.out.println(episodeData.title())));
+
+        // Using stream to return the top 5 rated episodes of each series
+        List<EpisodeData> episodesData = seasons.stream()
+                .flatMap(seasonData -> seasonData.episodes().stream())
+                .collect(Collectors.toList());
+        System.out.println("\nTop 5 episodes");
+        episodesData.stream()
+                .filter(episodeData -> !episodeData.rating().equalsIgnoreCase("N/A"))
+                .sorted(Comparator.comparing(EpisodeData::rating).reversed())
+                .limit(5)
+                .forEach(System.out::println);
     }
 }
